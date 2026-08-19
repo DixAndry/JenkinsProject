@@ -34,7 +34,7 @@ services:
     container_name: task_frontend
     restart: unless-stopped
     expose:
-      - "5173"
+      - "80"
     depends_on:
       - backend
 
