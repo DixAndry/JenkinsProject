@@ -10,14 +10,14 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Récupération du code depuis GitHub...'
+                echo 'Recuperation du code depuis GitHub...'
                 checkout scm
             }
         }
 
         stage('Docker Pull') {
             steps {
-                echo 'Récupération des images Docker...'
+                echo 'Recuperation des images Docker...'
                 sh '''
                     docker pull dixandry/projet-devops-backend:latest
                     docker pull dixandry/projet-devops-frontend:latest
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Déploiement avec Docker Compose...'
+                echo 'Deploiement avec Docker Compose...'
                 sh '''
                     docker compose \
                       --env-file ${ENV_FILE} \
@@ -39,7 +39,7 @@ pipeline {
 
         stage('Health Check') {
             steps {
-                echo 'Vérification de l'application...'
+                echo 'Verification de l application...'
                 sh '''
                     sleep 5
                     docker ps
@@ -51,11 +51,11 @@ pipeline {
 
     post {
         success {
-            echo 'Déploiement réussi !'
+            echo 'Deploiement reussi !'
         }
 
         failure {
-            echo 'Le déploiement a échoué.'
+            echo 'Le deploiement a echoue.'
         }
     }
 }
