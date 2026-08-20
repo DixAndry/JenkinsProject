@@ -10,14 +10,14 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Récupération du code source...'
+                echo 'Récupération du code depuis GitHub...'
                 checkout scm
             }
         }
 
         stage('Docker Pull') {
             steps {
-                echo 'Récupération des dernières images Docker...'
+                echo 'Récupération des images Docker...'
                 sh '''
                     docker pull dixandry/projet-devops-backend:latest
                     docker pull dixandry/projet-devops-frontend:latest
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Déploiement de l'application...'
+                echo 'Déploiement avec Docker Compose...'
                 sh '''
                     docker compose \
                       --env-file ${ENV_FILE} \
