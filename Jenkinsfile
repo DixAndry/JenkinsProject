@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout(true)
+    }
+
     stages {
 
         stage('Checkout') {
@@ -29,6 +33,17 @@ pipeline {
                     cd frontend
                     npm install
                     npm run build
+                '''
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                echo 'Analyse de securite des dependances...'
+
+                sh '''
+                    cd frontend
+                    npm audit --audit-level=high
                 '''
             }
         }
