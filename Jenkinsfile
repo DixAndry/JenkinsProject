@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        COMPOSE_FILE = 'docker-compose.prod.yml'
-        ENV_FILE = '.env.prod'
-    }
-
     stages {
 
         stage('Checkout') {
@@ -15,35 +10,25 @@ pipeline {
             }
         }
 
-        stage('Docker Pull') {
+        stage('Backend Test') {
             steps {
-                echo 'Recuperation des images Docker...'
+                echo 'Test du backend FastAPI...'
+
                 sh '''
-                    docker pull dixandry/projet-devops-backend:latest
-                    docker pull dixandry/projet-devops-frontend:latest
+                    cd backend
+                    python3 -m compileall .
                 '''
             }
         }
 
-        stage('Deploy') {
+        stage('Frontend Build') {
             steps {
-                echo 'Deploiement avec Docker Compose...'
-                sh '''
-                    docker compose \
-                      --env-file ${ENV_FILE} \
-                      -f ${COMPOSE_FILE} \
-                      up -d
-                '''
-            }
-        }
+                echo 'Build du frontend React...'
 
-        stage('Health Check') {
-            steps {
-                echo 'Verification de l application...'
                 sh '''
-                    sleep 5
-                    docker ps
-                    curl -f http://localhost/ > /dev/null
+                    cd frontend
+                    npm install
+                    npm run build
                 '''
             }
         }
@@ -51,11 +36,11 @@ pipeline {
 
     post {
         success {
-            echo 'Deploiement reussi !'
+            echo 'CI Jenkins terminee avec succes !'
         }
 
         failure {
-            echo 'Le deploiement a echoue.'
+            echo 'La pipeline CI a echoue.'
         }
     }
 }
