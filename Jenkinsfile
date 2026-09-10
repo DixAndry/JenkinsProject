@@ -68,6 +68,18 @@ pipeline {
                 '''
             }
         }
+        stage('Trivy Filesystem Scan') {
+            steps {
+                echo 'Analyse de securite du projet avec Trivy...'
+
+                sh '''
+                    trivy fs \
+                        --severity HIGH,CRITICAL \
+                        --exit-code 1 \
+                        .
+                '''
+            }
+        }
     }
 
     post {
