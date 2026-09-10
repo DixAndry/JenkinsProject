@@ -1,4 +1,4 @@
-```groovy
+```text
 pipeline {
     agent any
     tools {
