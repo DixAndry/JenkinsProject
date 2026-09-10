@@ -10,6 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Recuperation du code depuis GitHub...'
+
                 checkout scm
             }
         }
@@ -41,14 +42,18 @@ pipeline {
             steps {
                 echo 'Analyse du code avec SonarQube...'
 
-                withSonarQubeEnv('sonarqube') {
-                    sh '''
-                        sonar-scanner \
-                            -Dsonar.projectKey=JenkinsProject \
-                            -Dsonar.projectName=JenkinsProject \
-                            -Dsonar.sources=backend,frontend \
-                            -Dsonar.sourceEncoding=UTF-8
-                    '''
+                script {
+                    def scannerHome = tool 'SonarScanner'
+
+                    withSonarQubeEnv('sonarqube') {
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                                -Dsonar.projectKey=JenkinsProject \
+                                -Dsonar.projectName=JenkinsProject \
+                                -Dsonar.sources=backend,frontend \
+                                -Dsonar.sourceEncoding=UTF-8
+                        """
+                    }
                 }
             }
         }
