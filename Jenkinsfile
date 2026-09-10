@@ -1,4 +1,4 @@
-```text
+
 pipeline {
     agent any
     tools {
