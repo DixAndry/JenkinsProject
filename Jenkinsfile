@@ -1,7 +1,9 @@
 ```groovy
 pipeline {
     agent any
-
+    tools {
+            sonarQube 'SonarScanner'
+        }
     options {
         skipDefaultCheckout(true)
     }
