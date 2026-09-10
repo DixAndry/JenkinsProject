@@ -1,8 +1,7 @@
 pipeline {
     agent any
-    tools {
-            sonarQube 'SonarScanner'
-        }
+    tools any
+    
     options {
         skipDefaultCheckout(true)
     }
