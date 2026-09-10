@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    agent any
 
     options {
         skipDefaultCheckout(true)
@@ -11,7 +10,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Recuperation du code depuis GitHub...'
-
                 checkout scm
             }
         }
