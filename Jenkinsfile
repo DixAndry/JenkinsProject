@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -10,6 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Recuperation du code depuis GitHub...'
+
                 checkout scm
             }
         }
@@ -37,6 +39,22 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                echo 'Analyse du code avec SonarQube...'
+
+                withSonarQubeEnv('sonarqube') {
+                    sh '''
+                        sonar-scanner \
+                            -Dsonar.projectKey=JenkinsProject \
+                            -Dsonar.projectName=JenkinsProject \
+                            -Dsonar.sources=backend,frontend \
+                            -Dsonar.sourceEncoding=UTF-8
+                    '''
+                }
+            }
+        }
+
         stage('Security Scan') {
             steps {
                 echo 'Analyse de securite des dependances...'
@@ -59,3 +77,4 @@ pipeline {
         }
     }
 }
+```
