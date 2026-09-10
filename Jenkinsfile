@@ -1,7 +1,7 @@
 pipeline {
     agent any
-    tools any
-    
+    agent any
+
     options {
         skipDefaultCheckout(true)
     }
