@@ -88,7 +88,7 @@ function App() {
     <main className="app-shell">
       <section className="panel">
         <h1>Gestion des tâches</h1>
-        <p>App de gestion des tâches </p>
+        <p>App de gestion des tâches integrer avec jenkins </p>
 
         <form onSubmit={handleSubmit} className="task-form">
           <input
