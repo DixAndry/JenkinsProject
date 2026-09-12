@@ -80,6 +80,16 @@ pipeline {
                 '''
             }
         }
+        stage('Docker Build') {
+            steps {
+                echo 'Construction des images Docker...'
+
+                sh '''
+                    docker build -t dixandry/projet-devops-backend:latest ./backend
+                    docker build -t dixandry/projet-devops-frontend:latest ./frontend
+                '''
+            }
+        }
     }
 
     post {
