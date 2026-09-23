@@ -6,6 +6,9 @@ from app.core.config import settings
 from app.database.init_db import init_db
 
 app = FastAPI(title=settings.app_name)
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 app.add_middleware(
     CORSMiddleware,
