@@ -90,6 +90,17 @@ pipeline {
                 '''
             }
         }
+        stage('Trivy Image Scan') {
+            steps {
+                echo 'Analyse de securite des images Docker...'
+
+                sh '''
+                    trivy image --timeout 30m --severity HIGH,CRITICAL dixandry/projet-devops-backend:latest
+
+                    trivy image --timeout 30m --severity HIGH,CRITICAL dixandry/projet-devops-frontend:latest
+                '''
+            }
+        }
     }
 
     post {
