@@ -124,17 +124,22 @@ pipeline {
         stage('Test K3s') {
             steps {
                 echo 'Test de la connexion entre Jenkins et K3s...'
-
                 withCredentials([file(
                     credentialsId: 'k3s-jenkins',
                     variable: 'KUBECONFIG'
                 )]) {
                     sh '''
-                        echo "=== Kubernetes Nodes ==="
-                        kubectl --kubeconfig="$KUBECONFIG" get nodes
+                        echo "=== TodoList Namespace ==="
+                        kubectl --kubeconfig="$KUBECONFIG" get namespace todolist
 
                         echo "=== TodoList Pods ==="
                         kubectl --kubeconfig="$KUBECONFIG" get pods -n todolist
+
+                        echo "=== TodoList Deployments ==="
+                        kubectl --kubeconfig="$KUBECONFIG" get deployments -n todolist
+
+                        echo "=== TodoList Services ==="
+                        kubectl --kubeconfig="$KUBECONFIG" get services -n todolist
                     '''
                 }
             }
