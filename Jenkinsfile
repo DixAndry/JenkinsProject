@@ -129,9 +129,6 @@ pipeline {
                     variable: 'KUBECONFIG'
                 )]) {
                     sh '''
-                        echo "=== TodoList Namespace ==="
-                        kubectl --kubeconfig="$KUBECONFIG" get namespace todolist
-
                         echo "=== TodoList Pods ==="
                         kubectl --kubeconfig="$KUBECONFIG" get pods -n todolist
 
